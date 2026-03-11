@@ -90,7 +90,7 @@ def buscar_no_nist():
     conhecidas = carregar_vulnerabilidades_conhecidas()
     data_hoje = datetime.now(timezone.utc)
     
-    DIAS_DE_BUSCA = 180 
+    DIAS_DE_BUSCA = 110 
     
     data_alvo = data_hoje - timedelta(days=DIAS_DE_BUSCA)
     data_inicio = data_alvo.isoformat(timespec='milliseconds').replace('+00:00', 'Z')
