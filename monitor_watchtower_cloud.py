@@ -173,10 +173,11 @@ def buscar_no_nist():
             erros_durante_busca.append(erro_msg)
             
     log("Ronda finalizada com sucesso!")
-    hora_atual = data_hoje.hour
-    minuto_atual = data_hoje.minute
     
-    hora_do_relatorio = (hora_atual % 4 == 0) and (minuto_atual < 30)
+    hora_atual = data_hoje.hour
+    
+    hora_do_relatorio = (hora_atual % 4 == 0)
+    
     if total_novas_encontradas > 0 or erros_durante_busca or hora_do_relatorio:
         enviar_relatorio_final(total_novas_encontradas, erros_durante_busca)
     else:
