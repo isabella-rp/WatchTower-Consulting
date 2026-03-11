@@ -2,12 +2,14 @@ name: Monitoramento WatchTower 24/7
 
 on:
   schedule:
-    - cron: '*/30 * * * *' 
+    - cron: '*/30 * * * *'
   workflow_dispatch:
 
 jobs:
   monitorar:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Baixando Código do Repositório
         uses: actions/checkout@v3
@@ -26,10 +28,10 @@ jobs:
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
         run: python monitor_watchtower_cloud.py
 
-      - name: Salvando Memória (Git Push)
+      - name: Salvando Planilha e Memória
         run: |
           git config --global user.name "WatchTower-Bot"
           git config --global user.email "bot@watchtower.com"
-          git add memorizadas.txt
-          git commit -m "Sistema: Memória de vulnerabilidades atualizada" || exit 0
+          git add memorizadas.txt historico_vulnerabilidades.csv || true
+          git commit -m "Sistema: Atualização da planilha de governança" || exit 0
           git push
