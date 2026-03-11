@@ -31,17 +31,23 @@ Identificação: O script consulta o NIST buscando falhas publicadas nas última
 
 Filtragem: Compara as falhas encontradas com o arquivo memorizadas.txt para evitar alertas duplicados.
 
+Governança de Dados (Planilha): Toda nova falha detectada é salva automaticamente no arquivo Excel (historico_vulnerabilidades.csv), nos ajudando a manter um controle. 
+
 Alerta: Caso uma nova falha seja detectada, um e-mail formatado é enviado imediatamente para a equipe de Resposta a Incidentes, que assim, encaminha para o professor. 
+
+Relatório de Status: A cada 4 horas, o sistema envia um e-mail de "Status da Ronda" (mesmo que não haja falhas novas) para garantir à equipe que o monitoramento está ativo e reportar possíveis erros de comunicação com a API.
 
 - Estrutura do Repositório:
 
-monitor_watchtower_cloud.py: O "cérebro" do robô (Python).
+monitor_watchtower_cloud.py: O código principal
 
-.github/workflows/monitoramento.yml: O "motor" que roda o código sozinho.
+.github/workflows/monitoramento.yml: O motor que roda o código sozinho
 
-memorizadas.txt: O banco de dados de memória do sistema.
+memorizadas.txt: O banco de dados de memória do sistema
 
-README.md: Este guia de governança.
+historico_vulnerabilidades.csv: A planilha de governança gerada automaticamente com o histórico de ameaças
+
+README.md: Este guia do projeto
 
 - Segurança: 
 
@@ -50,3 +56,5 @@ Este projeto segue as melhores práticas de segurança
 Gestão de Segredos: Nenhuma credencial de e-mail ou senha está exposta no código. Utilizamos o GitHub Secrets para gerenciar as variáveis de ambiente EMAIL_USER e EMAIL_PASS.
 
 Cadeia de Custódia: Cada execução do robô é registrada nos logs do GitHub Actions, permitindo auditoria completa.
+
+Tratamento de Erros HTTP: O script possui resiliência contra quedas da API do NIST, evitando "quebras" no motor e registrando as falhas de conexão nos relatórios.
