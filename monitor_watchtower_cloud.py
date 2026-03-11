@@ -55,8 +55,6 @@ def enviar_alerta_pessoal(cve_id, descricao, ativo):
     [RELATÓRIO DE MONITORAMENTO - WATCHTOWER CONSULTING]
     
     Identificamos uma vulnerabilidade crítica para o ativo: {ativo}.
-    Gentileza enviar para o professor o QUANTO ANTES. 
-    NÃO ESQUECER DE VERIFICAR OS ENVIADOS ANTES
     
     ------------------------------------------------------------
     Prezado Prof. Nilton,
@@ -86,6 +84,37 @@ def enviar_alerta_pessoal(cve_id, descricao, ativo):
     except Exception as e:
         log(f"Erro de e-mail: {e}")
 
+def enviar_relatorio_final(total_novas, erros):
+    assunto = f"[WATCHTOWER] Status da Ronda: {total_novas} novas falhas"
+    corpo = f"""
+    [STATUS DE MONITORAMENTO - WATCHTOWER CONSULTING]
+    
+    A ronda automática de segurança foi concluída.
+    
+    - Novas vulnerabilidades detectadas e alertadas: {total_novas}
+    - Erros de conexão com o NIST: {len(erros)}
+    """
+    
+    if erros:
+        corpo += "\nDetalhes dos erros:\n"
+        for erro in erros:
+            corpo += f"- {erro}\n"
+            
+    corpo += "\nSistemas de monitoramento operando normalmente.\n\nEquipe WatchTower Consulting"
+    
+    msg = MIMEText(corpo)
+    msg['Subject'] = assunto
+    msg['From'] = EMAIL
+    msg['To'] = EMAIL
+
+    try:
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+            server.login(EMAIL, SENHA_APP)
+            server.send_message(msg)
+        log("Relatório de resumo enviado com sucesso.")
+    except Exception as e:
+        log(f"Erro ao enviar resumo: {e}")
+
 def buscar_no_nist():
     conhecidas = carregar_vulnerabilidades_conhecidas()
     data_hoje = datetime.now(timezone.utc)
@@ -100,6 +129,9 @@ def buscar_no_nist():
     log(f"Iniciando Busca de {DIAS_DE_BUSCA} dias...")
     base_url = "https://services.nvd.nist.gov/rest/json/cves/2.0"
     headers = {'User-Agent': 'WatchTower-Monitor/1.0'}
+
+    total_novas_encontradas = 0
+    erros_durante_busca = []
 
     for ativo in ATIVOS:
         log(f"Verificando: {ativo}...")
@@ -127,15 +159,28 @@ def buscar_no_nist():
                         enviar_alerta_pessoal(cve_id, desc, ativo)
                         salvar_na_planilha(data_p, cve_id, ativo, desc)
                         salvar_nova_vulnerabilidade(cve_id)
+                        total_novas_encontradas += 1
             else:
-                log(f"   Erro no NIST (Código: {response.status_code})")
+                erro_msg = f"Erro no NIST (Código: {response.status_code}) para {ativo}"
+                log(f"   {erro_msg}")
+                erros_durante_busca.append(erro_msg)
             
             time.sleep(6)
             
         except Exception as e:
-            log(f"   Falha técnica ao buscar {ativo}: {e}")
+            erro_msg = f"Falha técnica ao buscar {ativo}: {e}"
+            log(f"   {erro_msg}")
+            erros_durante_busca.append(erro_msg)
             
     log("Ronda finalizada com sucesso!")
+    hora_atual = data_hoje.hour
+    minuto_atual = data_hoje.minute
+    
+    hora_do_relatorio = (hora_atual % 4 == 0) and (minuto_atual < 30)
+    if total_novas_encontradas > 0 or erros_durante_busca or hora_do_relatorio:
+        enviar_relatorio_final(total_novas_encontradas, erros_durante_busca)
+    else:
+        log("Ronda sem novidades. E-mail de status silenciado para evitar spam.")
 
 if __name__ == "__main__":
     buscar_no_nist()
