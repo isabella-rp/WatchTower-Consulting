@@ -36,7 +36,11 @@ def carregar_vulnerabilidades_conhecidas():
 def salvar_na_planilha(data_pub, cve_id, ativo, descricao):
     arquivo_novo = not os.path.exists(PLANILHA_CSV)
     with open(PLANILHA_CSV, mode='a', newline='', encoding='utf-8-sig') as f:
+        if arquivo_novo:
+            f.write("sep=;\n")
+            
         escritor = csv.writer(f, delimiter=';')
+        
         if arquivo_novo:
             escritor.writerow(['Data Pub.', 'ID CVE', 'Ativo Impactado', 'Descrição Técnica'])
         escritor.writerow([data_pub, cve_id, ativo, descricao])
@@ -50,12 +54,12 @@ def enviar_alerta_pessoal(cve_id, descricao, ativo):
     corpo = f"""
     [RELATÓRIO DE MONITORAMENTO - WATCHTOWER CONSULTING]
     
-    Identificamos uma vulnerabilidade crítica para o ativo: {ativo}.
-    Gentileza enviar para o professor o quanto antes
+    Identificámos uma vulnerabilidade crítica para o ativo: {ativo}.
+    Gentileza encaminhar para o professor o mais rápido possível
     ------------------------------------------------------------
     Prezado Prof. Nilton,
     
-    Nossa plataforma detectou uma falha publicada no NIST:
+    Nossa plataforma detetou uma falha publicada no NIST:
     
     - Ativo: {ativo}
     - ID: {cve_id}
@@ -65,7 +69,7 @@ def enviar_alerta_pessoal(cve_id, descricao, ativo):
     ------------------------------------------------------------
     
     Atenciosamente, 
-    Equipe WatchTower Consulting
+    Equipa WatchTower Consulting
     """
     msg = MIMEText(corpo)
     msg['Subject'] = assunto
@@ -78,7 +82,7 @@ def enviar_alerta_pessoal(cve_id, descricao, ativo):
             server.send_message(msg)
         log(f"Alerta enviado: {cve_id}")
     except Exception as e:
-        log(f"Erro e-mail: {e}")
+        log(f"Erro de e-mail: {e}")
 
 def buscar_no_nist():
     conhecidas = carregar_vulnerabilidades_conhecidas()
@@ -108,7 +112,7 @@ def buscar_no_nist():
             
             if response.status_code == 200:
                 vulnerabilidades = response.json().get('vulnerabilities', [])
-                log(f"Encontradas {len(vulnerabilidades)} ocorrências.")
+                log(f"   Encontradas {len(vulnerabilidades)} ocorrências.")
                 
                 for item in vulnerabilidades:
                     cve = item.get('cve', {})
@@ -122,12 +126,12 @@ def buscar_no_nist():
                         salvar_na_planilha(data_p, cve_id, ativo, desc)
                         salvar_nova_vulnerabilidade(cve_id)
             else:
-                log(f"Erro no NIST (Código: {response.status_code})")
+                log(f"   Erro no NIST (Código: {response.status_code})")
             
             time.sleep(6)
             
         except Exception as e:
-            log(f"Falha técnica ao buscar {ativo}: {e}")
+            log(f"   Falha técnica ao buscar {ativo}: {e}")
             
     log("Ronda finalizada com sucesso!")
 
