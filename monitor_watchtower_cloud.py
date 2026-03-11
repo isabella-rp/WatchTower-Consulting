@@ -35,10 +35,8 @@ def carregar_vulnerabilidades_conhecidas():
 
 def salvar_na_planilha(data_pub, cve_id, ativo, descricao):
     arquivo_novo = not os.path.exists(PLANILHA_CSV)
-    
     with open(PLANILHA_CSV, mode='a', newline='', encoding='utf-8-sig') as f:
         escritor = csv.writer(f, delimiter=';')
-        
         if arquivo_novo:
             escritor.writerow(['Data Pub.', 'ID CVE', 'Ativo Impactado', 'Descrição Técnica'])
         escritor.writerow([data_pub, cve_id, ativo, descricao])
@@ -49,13 +47,11 @@ def salvar_nova_vulnerabilidade(cve_id):
 
 def enviar_alerta_pessoal(cve_id, descricao, ativo):
     assunto = f"[WATCHTOWER] ALERTA: {ativo} ({cve_id})"
-    
     corpo = f"""
     [RELATÓRIO DE MONITORAMENTO - WATCHTOWER CONSULTING]
     
     Identificamos uma vulnerabilidade crítica para o ativo: {ativo}.
-    Gentileza copiar o texto abaixo e enviar ao professor o quanto antes
-
+    Gentileza enviar para o professor o quanto antes
     ------------------------------------------------------------
     Prezado Prof. Nilton,
     
@@ -70,21 +66,19 @@ def enviar_alerta_pessoal(cve_id, descricao, ativo):
     
     Atenciosamente, 
     Equipe WatchTower Consulting
-    "A vigilância que blinda o seu capital"
     """
-    
     msg = MIMEText(corpo)
     msg['Subject'] = assunto
     msg['From'] = EMAIL
-    msg['To'] = EMAIL 
+    msg['To'] = EMAIL
 
     try:
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
             server.login(EMAIL, SENHA_APP)
             server.send_message(msg)
-        log(f" Alerta enviado para o e-mail: {cve_id}")
+        log(f"Alerta enviado: {cve_id}")
     except Exception as e:
-        log(f" Erro ao enviar e-mail: {e}")
+        log(f"Erro e-mail: {e}")
 
 def buscar_no_nist():
     conhecidas = carregar_vulnerabilidades_conhecidas()
@@ -93,16 +87,16 @@ def buscar_no_nist():
     DIAS_DE_BUSCA = 110 
     
     data_alvo = data_hoje - timedelta(days=DIAS_DE_BUSCA)
-    data_inicio = data_alvo.isoformat(timespec='milliseconds').replace('+00:00', 'Z')
-    data_fim = data_hoje.isoformat(timespec='milliseconds').replace('+00:00', 'Z')
     
-    log(f" Iniciando Busca Histórica de {DIAS_DE_BUSCA} dias...")
+    data_inicio = data_alvo.strftime('%Y-%m-%dT%H:%M:%S.000') + '+00:00'
+    data_fim = data_hoje.strftime('%Y-%m-%dT%H:%M:%S.000') + '+00:00'
     
+    log(f"Iniciando Busca Histórica de {DIAS_DE_BUSCA} dias...")
     base_url = "https://services.nvd.nist.gov/rest/json/cves/2.0"
     headers = {'User-Agent': 'WatchTower-Monitor/1.0'}
 
     for ativo in ATIVOS:
-        log(f" Verificando: {ativo}...")
+        log(f"Verificando: {ativo}...")
         params = {
             'keywordSearch': ativo, 
             'pubStartDate': data_inicio, 
@@ -114,7 +108,7 @@ def buscar_no_nist():
             
             if response.status_code == 200:
                 vulnerabilidades = response.json().get('vulnerabilities', [])
-                log(f" Encontradas {len(vulnerabilidades)} ocorrências.")
+                log(f"Encontradas {len(vulnerabilidades)} ocorrências.")
                 
                 for item in vulnerabilidades:
                     cve = item.get('cve', {})
@@ -128,14 +122,14 @@ def buscar_no_nist():
                         salvar_na_planilha(data_p, cve_id, ativo, desc)
                         salvar_nova_vulnerabilidade(cve_id)
             else:
-                log(f" Erro no NIST (Código: {response.status_code})")
+                log(f"Erro no NIST (Código: {response.status_code})")
             
             time.sleep(6)
             
         except Exception as e:
-            log(f" Falha técnica ao buscar {ativo}: {e}")
+            log(f"Falha técnica ao buscar {ativo}: {e}")
             
-    log(" Ronda finalizada com sucesso!")
+    log("Ronda finalizada com sucesso!")
 
 if __name__ == "__main__":
     buscar_no_nist()
