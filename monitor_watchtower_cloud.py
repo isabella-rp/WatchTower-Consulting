@@ -54,12 +54,14 @@ def enviar_alerta_pessoal(cve_id, descricao, ativo):
     corpo = f"""
     [RELATÓRIO DE MONITORAMENTO - WATCHTOWER CONSULTING]
     
-    Identificámos uma vulnerabilidade crítica para o ativo: {ativo}.
-    Gentileza encaminhar para o professor o mais rápido possível
+    Identificamos uma vulnerabilidade crítica para o ativo: {ativo}.
+    Gentileza enviar para o professor o QUANTO ANTES. 
+    NÃO ESQUECER DE VERIFICAR OS ENVIADOS ANTES
+    
     ------------------------------------------------------------
     Prezado Prof. Nilton,
     
-    Nossa plataforma detetou uma falha publicada no NIST:
+    Nossa plataforma detectou uma falha publicada no NIST:
     
     - Ativo: {ativo}
     - ID: {cve_id}
@@ -69,7 +71,7 @@ def enviar_alerta_pessoal(cve_id, descricao, ativo):
     ------------------------------------------------------------
     
     Atenciosamente, 
-    Equipa WatchTower Consulting
+    Equipe WatchTower Consulting
     """
     msg = MIMEText(corpo)
     msg['Subject'] = assunto
@@ -88,14 +90,14 @@ def buscar_no_nist():
     conhecidas = carregar_vulnerabilidades_conhecidas()
     data_hoje = datetime.now(timezone.utc)
     
-    DIAS_DE_BUSCA = 110 
+    DIAS_DE_BUSCA = 2 
     
     data_alvo = data_hoje - timedelta(days=DIAS_DE_BUSCA)
     
     data_inicio = data_alvo.strftime('%Y-%m-%dT%H:%M:%S.000') + '+00:00'
     data_fim = data_hoje.strftime('%Y-%m-%dT%H:%M:%S.000') + '+00:00'
     
-    log(f"Iniciando Busca Histórica de {DIAS_DE_BUSCA} dias...")
+    log(f"Iniciando Busca de {DIAS_DE_BUSCA} dias...")
     base_url = "https://services.nvd.nist.gov/rest/json/cves/2.0"
     headers = {'User-Agent': 'WatchTower-Monitor/1.0'}
 
