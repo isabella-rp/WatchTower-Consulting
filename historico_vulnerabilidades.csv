@@ -1,0 +1,7 @@
+﻿Data Pub.;ID CVE;Ativo Impactado;Descrição Técnica
+2026-02-17T18:20:29.940;CVE-2025-36247;Windows 11 Pro;IBM Db2 for Linux, UNIX and Windows (includes Db2 Connect Server) 11.5.0 through 11.5.9 and 12.1.0 through 12.1.3 is vulnerable to an XML external entity injection (XXE) attack when processing XML data. A remote attacker could exploit this vulnerability to expose sensitive information or consume memory resources.
+2025-12-05T01:15:48.557;CVE-2025-62223;Microsoft Edge;User interface (ui) misrepresentation of critical information in Microsoft Edge for iOS allows an unauthorized attacker to perform spoofing over a network.
+2025-12-18T22:16:01.750;CVE-2025-65046;Microsoft Edge;Microsoft Edge (Chromium-based) Spoofing Vulnerability
+2026-01-07T23:15:44.407;CVE-2025-62224;Microsoft Edge;User interface (ui) misrepresentation of critical information in Microsoft Edge for Android allows an authorized attacker to perform spoofing over a network.
+2026-01-16T22:16:25.983;CVE-2026-21223;Microsoft Edge;Improper privilege management in Microsoft Edge (Chromium-based) allows an authorized attacker to bypass a security feature locally.
+2026-02-05T23:15:54.093;CVE-2026-0391;Microsoft Edge;User interface (ui) misrepresentation of critical information in Microsoft Edge for Android allows an unauthorized attacker to perform spoofing over a network.
