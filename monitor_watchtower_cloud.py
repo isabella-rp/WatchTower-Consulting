@@ -54,12 +54,12 @@ def enviar_alerta_pessoal(cve_id, descricao, ativo):
     corpo = f"""
     [RELATÓRIO DE MONITORAMENTO - WATCHTOWER CONSULTING]
     
-    Identificamos uma vulnerabilidade crítica para o ativo: {ativo}.
+    Identificámos uma vulnerabilidade crítica para o ativo: {ativo}.
     
     ------------------------------------------------------------
     Prezado Prof. Nilton,
     
-    Nossa plataforma detectou uma falha publicada no NIST:
+    A nossa plataforma detetou uma falha publicada no NIST:
     
     - Ativo: {ativo}
     - ID: {cve_id}
@@ -69,7 +69,7 @@ def enviar_alerta_pessoal(cve_id, descricao, ativo):
     ------------------------------------------------------------
     
     Atenciosamente, 
-    Equipe WatchTower Consulting
+    Equipa WatchTower Consulting
     """
     msg = MIMEText(corpo)
     msg['Subject'] = assunto
@@ -91,7 +91,7 @@ def enviar_relatorio_final(total_novas, erros):
     
     A ronda automática de segurança foi concluída.
     
-    - Novas vulnerabilidades detectadas e alertadas: {total_novas}
+    - Novas vulnerabilidades detetadas e alertadas: {total_novas}
     - Erros de conexão com o NIST: {len(erros)}
     """
     
@@ -100,7 +100,7 @@ def enviar_relatorio_final(total_novas, erros):
         for erro in erros:
             corpo += f"- {erro}\n"
             
-    corpo += "\nSistemas de monitoramento operando normalmente.\n\nEquipe WatchTower Consulting"
+    corpo += "\nSistemas de monitoramento a operar normalmente.\n\nEquipa WatchTower Consulting"
     
     msg = MIMEText(corpo)
     msg['Subject'] = assunto
@@ -119,16 +119,14 @@ def buscar_no_nist():
     conhecidas = carregar_vulnerabilidades_conhecidas()
     data_hoje = datetime.now(timezone.utc)
     
-    # --- 💡 MODO RESGATE HISTÓRICO (6 MESES) ---
-    # Vamos buscar exatamente o "buraco" que ficou faltando:
-    # Do dia 180 atrás até o dia 110 atrás. (Uma janela de 70 dias, que o NIST aceita)
-    data_fim_obj = data_hoje - timedelta(days=110)
-    data_inicio_obj = data_hoje - timedelta(days=180)
+    DIAS_DE_BUSCA = 2 
     
-    data_inicio = data_inicio_obj.strftime('%Y-%m-%dT%H:%M:%S.000') + '+00:00'
-    data_fim = data_fim_obj.strftime('%Y-%m-%dT%H:%M:%S.000') + '+00:00'
+    data_alvo = data_hoje - timedelta(days=DIAS_DE_BUSCA)
     
-    log(f"Iniciando Resgate Histórico (Dias -180 a -110)...")
+    data_inicio = data_alvo.strftime('%Y-%m-%dT%H:%M:%S.000') + '+00:00'
+    data_fim = data_hoje.strftime('%Y-%m-%dT%H:%M:%S.000') + '+00:00'
+    
+    log(f"A Iniciar Busca de {DIAS_DE_BUSCA} dias...")
     base_url = "https://services.nvd.nist.gov/rest/json/cves/2.0"
     headers = {'User-Agent': 'WatchTower-Monitor/1.0'}
 
@@ -136,7 +134,7 @@ def buscar_no_nist():
     erros_durante_busca = []
 
     for ativo in ATIVOS:
-        log(f"Verificando: {ativo}...")
+        log(f"A verificar: {ativo}...")
         params = {
             'keywordSearch': ativo, 
             'pubStartDate': data_inicio, 
@@ -176,14 +174,10 @@ def buscar_no_nist():
             
     log("Ronda finalizada com sucesso!")
     
-    # --- LÓGICA DO ALERTA DE 4 HORAS (HEARTBEAT) ---
     hora_atual = data_hoje.hour
     
-    # Verifica se a hora (em UTC) é múltipla de 4 (ex: 0, 4, 8, 12, 16, 20)
-    # Removemos a restrição dos minutos para compensar os atrasos do servidor do GitHub
     hora_do_relatorio = (hora_atual % 4 == 0)
     
-    # Só manda o e-mail de "Status" SE: Achou algo OU deu erro OU bateu o horário
     if total_novas_encontradas > 0 or erros_durante_busca or hora_do_relatorio:
         enviar_relatorio_final(total_novas_encontradas, erros_durante_busca)
     else:
