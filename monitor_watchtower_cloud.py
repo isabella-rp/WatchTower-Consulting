@@ -119,14 +119,16 @@ def buscar_no_nist():
     conhecidas = carregar_vulnerabilidades_conhecidas()
     data_hoje = datetime.now(timezone.utc)
     
-    DIAS_DE_BUSCA = 2 
+    # --- 💡 MODO RESGATE HISTÓRICO (6 MESES) ---
+    # Vamos buscar exatamente o "buraco" que ficou faltando:
+    # Do dia 180 atrás até o dia 110 atrás. (Uma janela de 70 dias, que o NIST aceita)
+    data_fim_obj = data_hoje - timedelta(days=110)
+    data_inicio_obj = data_hoje - timedelta(days=180)
     
-    data_alvo = data_hoje - timedelta(days=DIAS_DE_BUSCA)
+    data_inicio = data_inicio_obj.strftime('%Y-%m-%dT%H:%M:%S.000') + '+00:00'
+    data_fim = data_fim_obj.strftime('%Y-%m-%dT%H:%M:%S.000') + '+00:00'
     
-    data_inicio = data_alvo.strftime('%Y-%m-%dT%H:%M:%S.000') + '+00:00'
-    data_fim = data_hoje.strftime('%Y-%m-%dT%H:%M:%S.000') + '+00:00'
-    
-    log(f"Iniciando Busca de {DIAS_DE_BUSCA} dias...")
+    log(f"Iniciando Resgate Histórico (Dias -180 a -110)...")
     base_url = "https://services.nvd.nist.gov/rest/json/cves/2.0"
     headers = {'User-Agent': 'WatchTower-Monitor/1.0'}
 
@@ -174,14 +176,21 @@ def buscar_no_nist():
             
     log("Ronda finalizada com sucesso!")
     
+    # --- LÓGICA DO ALERTA DE 4 HORAS (HEARTBEAT) ---
     hora_atual = data_hoje.hour
     
+    # Verifica se a hora (em UTC) é múltipla de 4 (ex: 0, 4, 8, 12, 16, 20)
+    # Removemos a restrição dos minutos para compensar os atrasos do servidor do GitHub
     hora_do_relatorio = (hora_atual % 4 == 0)
     
+    # Só manda o e-mail de "Status" SE: Achou algo OU deu erro OU bateu o horário
     if total_novas_encontradas > 0 or erros_durante_busca or hora_do_relatorio:
         enviar_relatorio_final(total_novas_encontradas, erros_durante_busca)
     else:
         log("Ronda sem novidades. E-mail de status silenciado para evitar spam.")
+
+if __name__ == "__main__":
+    buscar_no_nist()
 
 if __name__ == "__main__":
     buscar_no_nist()
