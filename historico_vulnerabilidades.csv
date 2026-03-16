@@ -10,3 +10,4 @@
 2025-09-16T19:15:35.410;CVE-2025-47967;Microsoft Edge;Insufficient ui warning of dangerous operations in Microsoft Edge for Android allows an unauthorized attacker to perform spoofing over a network.
 2025-09-24T19:15:41.920;CVE-2025-59251;Microsoft Edge;Microsoft Edge (Chromium-based) Remote Code Execution Vulnerability
 2025-10-31T20:15:52.413;CVE-2025-60711;Microsoft Edge;Protection mechanism failure in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.
+2026-03-16T14:18:06.797;CVE-2026-0385;Microsoft Edge;Microsoft Edge (Chromium-based) for Android Spoofing Vulnerability
