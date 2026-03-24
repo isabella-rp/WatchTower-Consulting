@@ -55,7 +55,7 @@ def enviar_alerta_pessoal(cve_id, descricao, ativo, score, severidade):
     
     assunto = f"[WATCHTOWER] ALERTA {severidade}: {ativo} ({cve_id})"
     link_cve = f"https://nvd.nist.gov/vuln/detail/{cve_id}"
-    corpo = f'
+    corpo = f"""
     <html>
     <body style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
         <h3 style="color: #d9534f;">[RELATÓRIO DE MONITORAMENTO - WATCHTOWER CONSULTING]</h3>
@@ -79,7 +79,7 @@ def enviar_alerta_pessoal(cve_id, descricao, ativo, score, severidade):
         <p>Atenciosamente, <br>
         <strong>Equipe <a href="{link_watchtower}" style="color: #5cb85c; text-decoration: none;">WatchTower Consulting</a></strong></p>
     </body>
-    </html>  '
+    </html>  """
     
     msg = MIMEText(corpo, 'html')
     msg['Subject'] = assunto
