@@ -12,3 +12,4 @@
 2025-09-24T19:15:41.920;CVE-2025-59251;Microsoft Edge;Microsoft Edge (Chromium-based) Remote Code Execution Vulnerability
 2025-10-31T20:15:52.413;CVE-2025-60711;Microsoft Edge;Protection mechanism failure in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.
 2026-03-16T14:18:06.797;CVE-2026-0385;Microsoft Edge;Microsoft Edge (Chromium-based) for Android Spoofing Vulnerability
+2026-03-23T19:16:39.040;CVE-2026-0898;Microsoft Edge;An arbitrary file-write vulnerability in Pega Browser Extension (PBE) affects Pega Robot Studio developers who are automating Google Chrome and Microsoft Edge using either version 22.1 or R25. This vulnerability does not affect Robot Runtime users. A bad actor could create a website that includes malicious code. The vulnerability may be exploited if a Pega Robot Studio developer is deceived into visiting this website during interrogation mode in Robot Studio.
