@@ -10,13 +10,13 @@ from datetime import datetime, timedelta, timezone
 EMAIL = os.environ.get("EMAIL_USER")
 SENHA_APP = os.environ.get("EMAIL_PASS")
 
-ATIVOS_CPE = {
-    "Windows Server 2022": "cpe:2.3:o:microsoft:windows_server_2022",
-    "SQL Server 2022": "cpe:2.3:a:microsoft:sql_server:2022",
-    "Cisco Catalyst 9500": "cpe:2.3:h:cisco:catalyst_9500",
-    "Windows 11": "cpe:2.3:o:microsoft:windows_11",
-    "Microsoft Edge": "cpe:2.3:a:microsoft:edge"
-}
+ATIVOS = [
+    "Windows Server 2022",
+    "SQL Server 2022",
+    "Cisco Catalyst 9500",
+    "Windows 11",
+    "Microsoft Edge"
+]
 
 DB_VULNS = "memorizadas.txt"
 PLANILHA_CSV = "historico_vulnerabilidades.csv"
@@ -128,24 +128,24 @@ def buscar_no_nist():
     conhecidas = carregar_vulnerabilidades_conhecidas()
     data_hoje = datetime.now(timezone.utc)
     
-    DIAS_DE_BUSCA = 30
+    DIAS_DE_BUSCA = 7
     
     data_alvo = data_hoje - timedelta(days=DIAS_DE_BUSCA)
     data_inicio = data_alvo.strftime('%Y-%m-%dT%H:%M:%S.000') + '+00:00'
     data_fim = data_hoje.strftime('%Y-%m-%dT%H:%M:%S.000') + '+00:00'
     
-    log(f"Iniciando Busca de {DIAS_DE_BUSCA} dias via CPE...")
+    log(f"Iniciando Busca de {DIAS_DE_BUSCA} dias...")
     base_url = "https://services.nvd.nist.gov/rest/json/cves/2.0"
     headers = {'User-Agent': 'WatchTower-Monitor/2.0'} 
 
     total_novas_encontradas = 0
     erros_durante_busca = []
 
-    for ativo, cpe_string in ATIVOS_CPE.items():
-        log(f"A verificar: {ativo} (CPE: {cpe_string})...")
+    for ativo in ATIVOS:
+        log(f"A verificar: {ativo}...")
         
         params = {
-            'virtualMatchString': cpe_string, 
+            'keywordSearch': ativo, 
             'pubStartDate': data_inicio, 
             'pubEndDate': data_fim
         }
@@ -214,48 +214,6 @@ def buscar_no_nist():
     else:
         log("Ronda sem novidades. E-mail de status silenciado para evitar spam.")
 
-"""if __name__ == "__main__":
-    buscar_no_nist()"""
-
-def resgatar_cve_perdida(cve_id, ativo):
- log(f"Iniciando resgate forçado da vulnerabilidade: {cve_id}...")
- base_url = "https://services.nvd.nist.gov/rest/json/cves/2.0"
- headers = {'User-Agent': 'WatchTower-Monitor/2.0'}
- params = {'cveId': cve_id} # Busca cirúrgica direto pelo ID da CVE!
-
- try:
- response = requests.get(base_url, headers=headers, params=params, timeout=30)
- 
- if response.status_code == 200:
- vulnerabilidades = response.json().get('vulnerabilities', [])
- 
- if vulnerabilidades:
- cve = vulnerabilidades[0].get('cve', {})
- desc = cve.get('descriptions', [{}])[0].get('value', 'Sem descrição')
- 
- # Extraindo o Score
- metricas = cve.get('metrics', {})
- score = "N/A"
- severidade = "Desconhecida"
- 
- if 'cvssMetricV31' in metricas:
- score = metricas['cvssMetricV31'][0]['cvssData'].get('baseScore', 'N/A')
- severidade = metricas['cvssMetricV31'][0]['cvssData'].get('baseSeverity', 'Desconhecida')
- 
- log(f"CVE Encontrada! Gravidade: {severidade}. Enviando e-mail...")
- # Chama a função que já existe no seu código para enviar o e-mail
- enviar_alerta_pessoal(cve_id, desc, ativo, score, severidade)
- log("Resgate concluído! E-mail enviado com sucesso.")
- else:
- log("O NIST não retornou dados para esse ID. Verifique se o CVE ID está correto.")
- else:
- log(f"Erro no NIST: Código {response.status_code}")
- 
- except Exception as e:
- log(f"Falha na conexão de resgate: {e}")
-
 if __name__ == "__main__":
     buscar_no_nist()
- 
- # === OPÇÃO 2: Rodar o Resgate (Descomente a linha abaixo e coloque a CVE e o Ativo) ===
- resgatar_cve_perdida("CVE-2026-0898", "Microsoft Edge") 
+
