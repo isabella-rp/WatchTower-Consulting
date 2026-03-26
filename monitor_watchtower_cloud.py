@@ -10,7 +10,6 @@ from datetime import datetime, timedelta, timezone
 EMAIL = os.environ.get("EMAIL_USER")
 SENHA_APP = os.environ.get("EMAIL_PASS")
 
-# Uso do padrão CPE (Common Platform Enumeration) para evitar falsos positivos
 ATIVOS_CPE = {
     "Windows Server 2022": "cpe:2.3:o:microsoft:windows_server_2022",
     "SQL Server 2022": "cpe:2.3:a:microsoft:sql_server:2022",
@@ -129,7 +128,7 @@ def buscar_no_nist():
     conhecidas = carregar_vulnerabilidades_conhecidas()
     data_hoje = datetime.now(timezone.utc)
     
-    DIAS_DE_BUSCA = 2 
+    DIAS_DE_BUSCA = 5 
     
     data_alvo = data_hoje - timedelta(days=DIAS_DE_BUSCA)
     data_inicio = data_alvo.strftime('%Y-%m-%dT%H:%M:%S.000') + '+00:00'
