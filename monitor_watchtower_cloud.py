@@ -128,7 +128,7 @@ def buscar_no_nist():
     conhecidas = carregar_vulnerabilidades_conhecidas()
     data_hoje = datetime.now(timezone.utc)
     
-    DIAS_DE_BUSCA = 5 
+    DIAS_DE_BUSCA = 30
     
     data_alvo = data_hoje - timedelta(days=DIAS_DE_BUSCA)
     data_inicio = data_alvo.strftime('%Y-%m-%dT%H:%M:%S.000') + '+00:00'
