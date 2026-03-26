@@ -214,5 +214,48 @@ def buscar_no_nist():
     else:
         log("Ronda sem novidades. E-mail de status silenciado para evitar spam.")
 
+"""if __name__ == "__main__":
+    buscar_no_nist()"""
+
+def resgatar_cve_perdida(cve_id, ativo):
+ log(f"Iniciando resgate forçado da vulnerabilidade: {cve_id}...")
+ base_url = "https://services.nvd.nist.gov/rest/json/cves/2.0"
+ headers = {'User-Agent': 'WatchTower-Monitor/2.0'}
+ params = {'cveId': cve_id} # Busca cirúrgica direto pelo ID da CVE!
+
+ try:
+ response = requests.get(base_url, headers=headers, params=params, timeout=30)
+ 
+ if response.status_code == 200:
+ vulnerabilidades = response.json().get('vulnerabilities', [])
+ 
+ if vulnerabilidades:
+ cve = vulnerabilidades[0].get('cve', {})
+ desc = cve.get('descriptions', [{}])[0].get('value', 'Sem descrição')
+ 
+ # Extraindo o Score
+ metricas = cve.get('metrics', {})
+ score = "N/A"
+ severidade = "Desconhecida"
+ 
+ if 'cvssMetricV31' in metricas:
+ score = metricas['cvssMetricV31'][0]['cvssData'].get('baseScore', 'N/A')
+ severidade = metricas['cvssMetricV31'][0]['cvssData'].get('baseSeverity', 'Desconhecida')
+ 
+ log(f"CVE Encontrada! Gravidade: {severidade}. Enviando e-mail...")
+ # Chama a função que já existe no seu código para enviar o e-mail
+ enviar_alerta_pessoal(cve_id, desc, ativo, score, severidade)
+ log("Resgate concluído! E-mail enviado com sucesso.")
+ else:
+ log("O NIST não retornou dados para esse ID. Verifique se o CVE ID está correto.")
+ else:
+ log(f"Erro no NIST: Código {response.status_code}")
+ 
+ except Exception as e:
+ log(f"Falha na conexão de resgate: {e}")
+
 if __name__ == "__main__":
     buscar_no_nist()
+ 
+ # === OPÇÃO 2: Rodar o Resgate (Descomente a linha abaixo e coloque a CVE e o Ativo) ===
+ resgatar_cve_perdida("CVE-2026-0898", "Microsoft Edge") 
