@@ -50,33 +50,66 @@ def salvar_nova_vulnerabilidade(cve_id):
 
 def enviar_alerta_pessoal(cve_id, descricao, ativo, score, severidade):
     cor_severidade = "#d9534f" if severidade in ["CRITICAL", "HIGH"] else "#f0ad4e"
-    assunto = f"[WATCHTOWER] ALERTA {severidade}: {ativo} ({cve_id})"
+    
     link_cve = f"https://nvd.nist.gov/vuln/detail/{cve_id}"
+    
+    assunto = f"[WATCHTOWER] ALERTA {severidade}: {ativo} ({cve_id})"
+    
     corpo = f"""
     <html>
-    <body style="font-family: Arial, sans-serif;">
-        <h3 style="color: #d9534f;">[ALERTA DE SEGURANÇA - CRÍTICO]</h3>
-        <p>Nova vulnerabilidade detectada para: <strong>{ativo}</strong></p>
-        <ul>
-            <li><strong>CVE:</strong> {cve_id}</li>
-            <li><strong>Score:</strong> {score} ({severidade})</li>
-        </ul>
-        <p><strong>Descrição:</strong> {descricao}</p>
-        <a href="{link_cve}">Ver detalhes no NIST</a>
+    <body style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
+        <div style="background-color: #f8f9fa; padding: 20px; border-left: 10px solid {cor_severidade};">
+            <h2 style="color: {cor_severidade}; margin-top: 0;">[WATCHTOWER - ALERTA DE VULNERABILIDADE]</h2>
+            
+            <p>Prezado Prof. Nilton,</p>
+            <p>Nossa plataforma de monitoramento identificou uma vulnerabilidade crítica que impacta diretamente o ambiente do Banco Digital.</p>
+            
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Ativo Impactado:</strong></td>
+                    <td style="padding: 8px; border-bottom: 1px solid #ddd;">{ativo}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>ID da Falha:</strong></td>
+                    <td style="padding: 8px; border-bottom: 1px solid #ddd;">{cve_id}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Gravidade:</strong></td>
+                    <td style="padding: 8px; border-bottom: 1px solid #ddd;"><span style="color: {cor_severidade}; font-weight: bold;">{severidade} (Score: {score})</span></td>
+                </tr>
+            </table>
+
+            <p><strong>Descrição Técnica:</strong><br>{descricao}</p>
+
+            <div style="margin-top: 25px; text-align: center;">
+                <a href="{link_cve}" 
+                   style="background-color: #0275d8; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
+                   ACESSAR ANÁLISE OFICIAL (NIST NVD)
+                </a>
+            </div>
+
+            <p style="font-size: 12px; color: #777; margin-top: 30px;">
+                <em>Ação Recomendada: Iniciar plano de mitigação e verificar disponibilidade de patch de segurança imediatamente.</em>
+            </p>
+            <hr style="border: 0; border-top: 1px solid #ccc;">
+            <p>Atenciosamente,<br><strong>Equipe WatchTower Consulting</strong></p>
+        </div>
     </body>
     </html>
     """
+    
     msg = MIMEText(corpo, 'html')
     msg['Subject'] = assunto
     msg['From'] = EMAIL
-    msg['To'] = EMAIL
+    msg['To'] = EMAIL # Ou o e-mail do professor se ele quiser receber direto
+
     try:
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
             server.login(EMAIL, SENHA_APP)
             server.send_message(msg)
-        log(f"Alerta enviado: {cve_id}")
+        log(f"Alerta enviado com link: {cve_id}")
     except Exception as e:
-        log(f"Erro e-mail: {e}")
+        log(f"Erro ao enviar e-mail: {e}")
 
 def buscar_no_nist():
     conhecidas = carregar_vulnerabilidades_conhecidas()
