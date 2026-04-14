@@ -3,7 +3,7 @@ name: Monitoramento WatchTower 24/7
 on:
   schedule:
     - cron: '*/30 * * * *' 
-  workflow_dispatch:     
+  workflow_dispatch: 
 
 jobs:
   monitorar:
@@ -26,6 +26,7 @@ jobs:
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          NIST_API_KEY: ${{ secrets.NIST_API_KEY }} 
         run: python monitor_watchtower_cloud.py
 
       - name: Salvando Planilha e Memória
