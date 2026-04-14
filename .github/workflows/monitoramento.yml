@@ -2,7 +2,7 @@ name: Monitoramento WatchTower 24/7
 
 on:
   schedule:
-    - cron: '*/30 * * * *' 
+    - cron: '17 * * * *' 
   workflow_dispatch: 
 
 jobs:
