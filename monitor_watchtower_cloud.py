@@ -82,7 +82,7 @@ def buscar_no_nist():
     conhecidas = carregar_vulnerabilidades_conhecidas()
     data_hoje = datetime.now(timezone.utc)
     
-    DIAS_DE_BUSCA = 40 
+    DIAS_DE_BUSCA = 7 
     data_alvo = data_hoje - timedelta(days=DIAS_DE_BUSCA)
     
     data_inicio = data_alvo.strftime('%Y-%m-%dT%H:%M:%S.000')
@@ -104,7 +104,6 @@ def buscar_no_nist():
         }
         
         try:
-            # Aumento do timeout e tratamento de rate limit
             res = requests.get(base_url, headers=headers, params=params, timeout=60)
             
             if res.status_code == 200:
@@ -140,7 +139,6 @@ def buscar_no_nist():
         except Exception as e:
             log(f"   [!] Erro de conexão: {e}")
         
-        # O NIST v2 exige delay mesmo com API Key
         time.sleep(6 if NIST_API_KEY else 15)
 
     log(f"Ronda finalizada. Total de novas falhas: {total_novas}")
