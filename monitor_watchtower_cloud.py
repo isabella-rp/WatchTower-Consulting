@@ -132,8 +132,8 @@ def buscar_no_nist():
         log(f"Varrendo NIST para: {ativo}...")
         params = {
             'keywordSearch': ativo,
-            'lastModStartDate': data_inicio, # Mudança para pegar atualizações recentes
-            'lastModEndDate': data_fim
+            'pubStartDate': data_inicio,
+            'pubEndDate': data_fim
         }
         
         try:
