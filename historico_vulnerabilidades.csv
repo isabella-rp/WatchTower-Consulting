@@ -34,3 +34,6 @@ The original vulnerability was being exploited in the wild.
 2026-04-30T22:16:24.093;CVE-2025-14688;Windows 11;MEDIUM;5.3;IBM Db2 11.5.0 through 11.5.9, and 12.1.0 through 12.1.3 for Linux, UNIX and Windows (includes Db2 Connect Server) could allow an authenticated user to cause a denial of service due to improper neutralization of special elements in data query logic when certain configurations exist.
 2026-04-30T22:16:24.597;CVE-2025-36122;Windows 11;MEDIUM;6.5;IBM Db2 11.5.0 through 11.5.9, and 12.1.0 through 12.1.3 for Linux, UNIX and Windows (includes DB2 Connect Server) could allow an authenticated user to cause a denial of service using a specially crafted SQL query due to improper allocation of system resources.
 2026-04-30T22:16:25.017;CVE-2026-1577;Windows 11;MEDIUM;6.5;IBM Db2 11.5.0 through 11.5.9, and 12.1.0 through 12.1.4 for Linux, UNIX and Windows (includes Db2 Connect Server) could allow an authenticated user to cause a denial of service due to improper neutralization of special elements in data query logic.
+2026-05-06T17:16:21.890;CVE-2026-21661;Windows 11;UNKNOWN;N/A;"Uncontrolled Search Path Element vulnerability in JohnsonControls AC2000 on Windows allows Leveraging/Manipulating Configuration File Search Paths.
+
+This issue affects AC2000: from 10.6 before release 10, from 11.0 before release 9, from 12 before release 3."
