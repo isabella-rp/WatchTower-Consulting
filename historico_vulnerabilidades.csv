@@ -37,3 +37,8 @@ The original vulnerability was being exploited in the wild.
 2026-05-06T17:16:21.890;CVE-2026-21661;Windows 11;UNKNOWN;N/A;"Uncontrolled Search Path Element vulnerability in JohnsonControls AC2000 on Windows allows Leveraging/Manipulating Configuration File Search Paths.
 
 This issue affects AC2000: from 10.6 before release 10, from 11.0 before release 9, from 12 before release 3."
+2026-05-12T18:17:13.510;CVE-2026-35429;Microsoft Edge;MEDIUM;4.3;User interface (ui) misrepresentation of critical information in Microsoft Edge for Android allows an unauthorized attacker to perform spoofing over a network.
+2026-05-12T18:17:19.687;CVE-2026-40416;Microsoft Edge;MEDIUM;4.3;User interface (ui) misrepresentation of critical information in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform spoofing over a network.
+2026-05-12T18:17:22.077;CVE-2026-41107;Microsoft Edge;HIGH;7.4;External control of file name or path in Microsoft Edge (Chromium-based) allows an unauthorized attacker to disclose information over a network.
+2026-05-12T18:17:26.077;CVE-2026-42838;Microsoft Edge;MEDIUM;5.4;Improper neutralization of special elements in output used by a downstream component ('injection') in Microsoft Edge (Chromium-based) allows an unauthorized attacker to elevate privileges over a network.
+2026-05-12T18:17:26.207;CVE-2026-42891;Microsoft Edge;MEDIUM;6.5;User interface (ui) misrepresentation of critical information in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform spoofing over a network.
