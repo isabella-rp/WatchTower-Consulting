@@ -42,3 +42,6 @@ This issue affects AC2000: from 10.6 before release 10, from 11.0 before release
 2026-05-12T18:17:22.077;CVE-2026-41107;Microsoft Edge;HIGH;7.4;External control of file name or path in Microsoft Edge (Chromium-based) allows an unauthorized attacker to disclose information over a network.
 2026-05-12T18:17:26.077;CVE-2026-42838;Microsoft Edge;MEDIUM;5.4;Improper neutralization of special elements in output used by a downstream component ('injection') in Microsoft Edge (Chromium-based) allows an unauthorized attacker to elevate privileges over a network.
 2026-05-12T18:17:26.207;CVE-2026-42891;Microsoft Edge;MEDIUM;6.5;User interface (ui) misrepresentation of critical information in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform spoofing over a network.
+2026-05-18T18:17:37.897;CVE-2026-45492;Microsoft Edge;MEDIUM;5.4;Improper input validation in Microsoft Edge (Chromium-based) allows an unauthorized attacker to bypass a security feature over a network.
+2026-05-18T18:17:38.390;CVE-2026-45494;Microsoft Edge;MEDIUM;5.4;Microsoft Edge (Chromium-based) Spoofing Vulnerability
+2026-05-18T18:17:38.600;CVE-2026-45495;Microsoft Edge;HIGH;8.8;Microsoft Edge (Chromium-based) Remote Code Execution Vulnerability
