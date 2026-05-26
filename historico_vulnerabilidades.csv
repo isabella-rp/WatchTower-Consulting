@@ -45,3 +45,4 @@ This issue affects AC2000: from 10.6 before release 10, from 11.0 before release
 2026-05-18T18:17:37.897;CVE-2026-45492;Microsoft Edge;MEDIUM;5.4;Improper input validation in Microsoft Edge (Chromium-based) allows an unauthorized attacker to bypass a security feature over a network.
 2026-05-18T18:17:38.390;CVE-2026-45494;Microsoft Edge;MEDIUM;5.4;Microsoft Edge (Chromium-based) Spoofing Vulnerability
 2026-05-18T18:17:38.600;CVE-2026-45495;Microsoft Edge;HIGH;8.8;Microsoft Edge (Chromium-based) Remote Code Execution Vulnerability
+2026-05-26T17:16:27.810;CVE-2025-13755;Windows 11;MEDIUM;5.5;IBM Db2 11.5.0 through 11.5.9, and 12.1.0 through 12.1.4 for Linux, UNIX and Windows (includes DB2 Connect Server) stores potentially sensitive information in log files that could be read by a local user.
