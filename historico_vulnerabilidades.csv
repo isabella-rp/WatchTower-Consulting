@@ -51,3 +51,5 @@ This issue affects AC2000: from 10.6 before release 10, from 11.0 before release
 2026-06-25T16:16:37.483;CVE-2026-4522;Windows 11;UNKNOWN;N/A;"Missing authentication for critical function vulnerability in HYPR Passwordless on Windows allows Credentials Interception.
 
 This issue affects HYPR Passwordless: before 11.1.1."
+2026-06-30T20:17:25.323;CVE-2025-36372;Windows 11;MEDIUM;5.5;IBM Db2 11.5.0 through 11.5.9, and 12.1.0 through 12.1.4 for Linux, UNIX and Windows (includes Db2 Connect Server) could disclose sensitive information to an authenticated user from the monitoring and event tables.
+2026-06-30T20:17:28.273;CVE-2026-11906;Windows 11;MEDIUM;6.5;IBM Db2 11.5.0 through 11.5.9, and 12.1.0 through 12.1.4 for Linux, UNIX and Windows (includes Db2 Connect Server) could allow an authenticated user to cause a denial of service due to improper neutralization of special elements in the data query logic of XMLTable-derived columns.
