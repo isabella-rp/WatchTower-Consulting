@@ -96,3 +96,4 @@ This issue affects HYPR Passwordless: before 11.1.1."
 2026-07-03T21:17:05.883;CVE-2026-58522;Microsoft Edge;MEDIUM;6.8;Relative path traversal in Microsoft Edge for Android allows an unauthorized attacker to disclose information locally.
 2026-07-03T21:17:06.000;CVE-2026-58524;Microsoft Edge;MEDIUM;5.4;Improper neutralization of input during web page generation ('cross-site scripting') in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform spoofing over a network.
 2026-07-03T21:17:06.127;CVE-2026-58597;Microsoft Edge;MEDIUM;4.3;Insufficient ui warning of dangerous operations in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform spoofing over a network.
+2026-07-03T22:16:55.740;CVE-2026-58523;Microsoft Edge;MEDIUM;6.5;Improper access control in Microsoft Edge for Android allows an unauthorized attacker to bypass a security feature over a network.
