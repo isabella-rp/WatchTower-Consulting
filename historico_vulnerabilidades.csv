@@ -105,3 +105,4 @@ This issue affects HYPR Passwordless: before 11.1.1."
 2026-07-26T18:18:23.780;CVE-2026-57978;Microsoft Edge;MEDIUM;5.4;Origin validation error in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform spoofing over a network.
 2026-07-26T18:18:25.033;CVE-2026-57989;Microsoft Edge;HIGH;7.4;Origin validation error in Microsoft Edge (Chromium-based) allows an unauthorized attacker to disclose information over a network.
 2026-07-26T18:18:25.153;CVE-2026-57990;Microsoft Edge;HIGH;7.4;Files or directories accessible to external parties in Microsoft Edge (Chromium-based) allows an unauthorized attacker to disclose information over a network.
+2026-07-28T16:19:42.337;CVE-2026-62828;Microsoft Edge;MEDIUM;5.4;Improper input validation in Microsoft Edge for Android allows an unauthorized attacker to perform tampering over a network.
