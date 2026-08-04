@@ -106,3 +106,18 @@ This issue affects HYPR Passwordless: before 11.1.1."
 2026-07-26T18:18:25.033;CVE-2026-57989;Microsoft Edge;HIGH;7.4;Origin validation error in Microsoft Edge (Chromium-based) allows an unauthorized attacker to disclose information over a network.
 2026-07-26T18:18:25.153;CVE-2026-57990;Microsoft Edge;HIGH;7.4;Files or directories accessible to external parties in Microsoft Edge (Chromium-based) allows an unauthorized attacker to disclose information over a network.
 2026-07-28T16:19:42.337;CVE-2026-62828;Microsoft Edge;MEDIUM;5.4;Improper input validation in Microsoft Edge for Android allows an unauthorized attacker to perform tampering over a network.
+2026-08-04T00:17:37.967;CVE-2026-65802;Microsoft Edge;HIGH;7.4;External control of file name or path in Microsoft Edge for Android allows an unauthorized attacker to disclose information over a network.
+2026-08-04T00:17:38.100;CVE-2026-65804;Microsoft Edge;MEDIUM;6.1;Improper control of generation of code ('code injection') in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform spoofing over a network.
+2026-08-04T00:17:38.240;CVE-2026-66310;Microsoft Edge;HIGH;7.7;External control of file name or path in Microsoft Edge for Android allows an unauthorized attacker to disclose information locally.
+2026-08-04T00:17:38.373;CVE-2026-66311;Microsoft Edge;MEDIUM;6.2;Missing authorization in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform tampering locally.
+2026-08-04T00:17:38.510;CVE-2026-66312;Microsoft Edge;MEDIUM;6.5;Buffer over-read in Microsoft Edge (Chromium-based) allows an authorized attacker to execute code over a network.
+2026-08-04T00:17:38.647;CVE-2026-66313;Microsoft Edge;MEDIUM;6.8;Origin validation error in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform tampering locally.
+2026-08-04T00:17:38.797;CVE-2026-66314;Microsoft Edge;MEDIUM;6.5;Time-of-check time-of-use (toctou) race condition in Microsoft Edge (Chromium-based) allows an unauthorized attacker to disclose information over a network.
+2026-08-04T00:17:38.927;CVE-2026-66315;Microsoft Edge;HIGH;7.5;Use after free in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.
+2026-08-04T00:17:39.060;CVE-2026-66316;Microsoft Edge;MEDIUM;5.4;Origin validation error in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform spoofing over a network.
+2026-08-04T00:17:39.183;CVE-2026-66317;Microsoft Edge;MEDIUM;5.4;Origin validation error in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform tampering over a network.
+2026-08-04T00:17:39.317;CVE-2026-66318;Microsoft Edge;HIGH;8.1;Origin validation error in Microsoft Edge (Chromium-based) allows an unauthorized attacker to disclose information over a network.
+2026-08-04T00:17:39.440;CVE-2026-66321;Microsoft Edge;HIGH;7.4;Access of resource using incompatible type ('type confusion') in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.
+2026-08-04T00:17:39.577;CVE-2026-66322;Microsoft Edge;HIGH;7.1;Origin validation error in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform spoofing over a network.
+2026-08-04T00:17:39.703;CVE-2026-66325;Microsoft Edge;MEDIUM;6.1;Server-side request forgery (ssrf) in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform spoofing over a network.
+2026-08-04T00:17:39.847;CVE-2026-66326;Microsoft Edge;MEDIUM;6.5;Missing authorization in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.
