@@ -121,3 +121,4 @@ This issue affects HYPR Passwordless: before 11.1.1."
 2026-08-04T00:17:39.577;CVE-2026-66322;Microsoft Edge;HIGH;7.1;Origin validation error in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform spoofing over a network.
 2026-08-04T00:17:39.703;CVE-2026-66325;Microsoft Edge;MEDIUM;6.1;Server-side request forgery (ssrf) in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform spoofing over a network.
 2026-08-04T00:17:39.847;CVE-2026-66326;Microsoft Edge;MEDIUM;6.5;Missing authorization in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.
+2026-08-11T20:18:44.243;CVE-2026-70339;Microsoft Edge;MEDIUM;5.4;Access of resource using incompatible type ('type confusion') in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.
