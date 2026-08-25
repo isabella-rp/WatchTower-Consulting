@@ -125,3 +125,22 @@ This issue affects HYPR Passwordless: before 11.1.1."
 2026-08-11T23:18:10.320;CVE-2026-73250;Windows 11;UNKNOWN;N/A;Notepad++ is a free and open-source source code editor. Prior to 8.9.7, the Notepad++ Windows 11 x64 and ARM64 installer passes the attacker-influenced installation directory `$INSTDIR` from PowerEditor/installer/nppSetup.nsi into a PowerShell `-Command` string used by RegisterMSIX to invoke Add-AppxPackage, allowing PowerShell subexpression syntax such as `$()` in the installation path to execute commands in the installer's security context when the context menu component is selected. This issue is fixed in version 8.9.7.
 2026-08-12T21:17:36.930;CVE-2026-18097;Windows 11;MEDIUM;5.5;IBM Db2 11.5.0 through 11.5.9, and 12.1.0 through 12.1.5 for Linux, UNIX and Windows (includes DB2 Connect Server) could allow a local attacker to obtain sensitive information due to the logging of plain text passwords in trace files.
 2026-08-14T18:19:09.003;CVE-2026-72970;Microsoft Edge;HIGH;8.3;Heap-based buffer overflow in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.
+2026-08-25T22:17:05.303;CVE-2026-65905;Windows 11;UNKNOWN;N/A;"Authentication Bypass by Capture-replay vulnerability in Apache Tomcat's DIGEST authenticator. If, before windowSize requests have been made, a client makes a DIGEST 
+authenticated request with a nonceCount on the upper boundary of the 
+replay window then that request is replayable once only while the 
+associated nonceCount remains within the replay window.
+
+
+
+ 
+
+This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.24, from 10.1.0-M1 through 10.1.57, from 9.0.0.M1 through 9.0.120.
+
+
+
+The following versions were EOL at the time the CVE was created but are 
+known to be affected: from 8.5.0 through 8.5.100, from 7.0.30 through 7.0.109. Other unsupported versions may also be affected.
+
+
+
+Users are recommended to upgrade to version 11.0.25, 10.1.58 or 9.0.121, which fix the issue."
