@@ -144,3 +144,10 @@ known to be affected: from 8.5.0 through 8.5.100, from 7.0.30 through 7.0.109. 
 
 
 Users are recommended to upgrade to version 11.0.25, 10.1.58 or 9.0.121, which fix the issue."
+2026-08-28T20:19:25.130;CVE-2026-62904;Microsoft Edge;MEDIUM;5.4;Incorrect authorization in Microsoft Edge (Chromium-based) allows an unauthorized attacker to disclose information over a network.
+2026-08-28T20:19:34.280;CVE-2026-66323;Microsoft Edge;MEDIUM;5.4;Improper neutralization of parameter/argument delimiters in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.
+2026-08-28T20:19:34.407;CVE-2026-66324;Microsoft Edge;MEDIUM;6.5;External control of file name or path in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform spoofing over a network.
+2026-08-28T20:19:34.673;CVE-2026-66798;Microsoft Edge;MEDIUM;4.3;Use after free in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.
+2026-08-28T20:19:40.267;CVE-2026-70309;Microsoft Edge;MEDIUM;5.4;Origin validation error in Microsoft Edge (Chromium-based) allows an unauthorized attacker to bypass a security feature over a network.
+2026-08-28T20:19:41.820;CVE-2026-70331;Microsoft Edge;MEDIUM;5.4;Improper neutralization of input used for llm prompting in Microsoft Edge for iOS allows an unauthorized attacker to perform spoofing over a network.
+2026-08-28T20:19:44.943;CVE-2026-72984;Microsoft Edge;HIGH;8.8;Access of resource using incompatible type ('type confusion') in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.
