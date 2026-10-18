@@ -171,3 +171,35 @@ This issue affects HYPR Passwordless: before 11.3.3."
 2026-10-15T09:17:16.910;CVE-2026-16437;Windows 11;UNKNOWN;N/A;Weak Password Recovery Mechanism for Forgotten Password vulnerability in Mitsubishi Electric GENESIS versions 11.03 and prior, GENESIS64 versions 10.97.3 and prior, ICONICS Suite versions 10.97.3 and prior, Hyper Historian versions 10.97.3 and prior, AnalytiX versions 10.97.3 and prior, MobileHMI 10.97.3 and prior, IoTWorX 10.97.3 and prior, MC Works64 all versions, GENESIS32 all versions, BizViz all versions, Mitsubishi Electric Iconics Digital Solutions GENESIS versions 11.03 and prior, GENESIS64 versions 10.97.3 and prior, ICONICS Suite versions 10.97.3 and prior, Hyper Historian versions 10.97.3 and prior, AnalytiX versions 10.97.3 and prior, MobileHMI 10.97.3 and prior, IoTWorX 10.97.3 and prior, GENESIS32 all versions, and BizViz all versions allows an authenticated local user with administrative privileges to unlock the system by tampering with the management file that stores the challenge response. Administrators are able to read and write the management file. But the management file is protected by Windows. As a result, the attacker may disclose, tamper with, destroy, or delete internal information, or cause the affected system to enter a denial-of-service (DoS) condition.
 2026-10-15T13:17:10.617;CVE-2026-104025;Windows 11;UNKNOWN;N/A;"Path Traversal (CWE-22) in the execute_obj function of the archive object viewer (peach.pas) in PeaZip 11.2.0 and earlier on Windows allows an attacker who convinces a victim to preview an entry of a crafted archive via the ""Preview with... -> Associated application"" action (Shift+Ctrl+O) to execute an arbitrary program already present on the victim's system, with no warning dialog. The function validates only outname (PeaZip's own temporary directory) with checkfiledirname, while the string actually executed is the concatenation outname+tempstring; tempstring is taken verbatim from the archive entry name (StringGridList.Cells[12,...]) and is never validated. checkfiledirname (list_utils.pas) rejects control and reserved characters in the file name but performs no "".."" path-containment check, so an entry named ../../../../Windows/System32/calc.exe escapes the extraction directory and is passed to cp_open -> ShellExecuteW; the extracting backend (7-Zip) strips the traversal while the opener does not. In addition, the SECEXTCONST dangerous-extension confirmation prompt is implemented only in the double-click handler (grid_obj_open) and not on this preview route, so an executable inside an archive reaches ShellExecuteW unannounced, and where the prompt does fire it names the entry's display name rather than the resolved path that will run. Arbitrary code execution was demonstrated with a proof of concept against official PeaZip builds, confirmed on two archive formats (.zip and .tar) to show the defect is in PeaZip's own path handling and not in a single format parser."
 2026-10-15T14:17:13.553;CVE-2026-104024;Windows 11;UNKNOWN;N/A;"Incomplete List of Disallowed Inputs (CWE-184) in the dangerous-extension confirmation of the archive object viewer (peach.pas, grid_obj_open) in PeaZip 10.5.0 through 11.2.0 on Windows allows an attacker who convinces a victim to open an entry of a crafted archive to execute a program, or an arbitrary command, with no confirmation dialog. The prompt (Do you want to run this file?) is gated by SECEXTCONST, a hard-coded list of seven extensions (exe cmd msi bat ps1 vbs reg); the check is an exact string comparison of the entry extension against that list, so it answers only whether the extension is one of the seven and never whether the shell will execute the file. Shell-executable and scripting-host types that Windows runs through ShellExecuteW are absent from the list, among them .url and .lnk. An archived Windows Internet Shortcut (.url) whose URL line is attacker-controlled is launched with no prompt, while the byte-identical content in an entry named .bat does raise the warning in the same session. A .lnk entry raises the ceiling from launching a program to running a command line, because a Windows shortcut carries arguments: a proof-of-concept shortcut targeting cmd.exe with an attacker-chosen command line executed with no prompt. The shortcut target is not confined to the local disk; the shell also resolved an attacker-named UNC path (fetching a remote payload was only attempted, not demonstrated). No privilege escalation; everything runs as the user who opened the archive."
+2026-10-18T16:17:21.770;CVE-2026-98684;Windows Server 2022;UNKNOWN;N/A;"In the Linux kernel, the following vulnerability has been resolved:
+
+smb: client: flush and commit data before querying allocated ranges
+
+The mode 0 / FALLOC_FL_KEEP_SIZE fallocate emulation for small interior
+ranges in smb3_simple_fallocate_range() issues
+FSCTL_QUERY_ALLOCATED_RANGES and zero-fills any sub-range the server
+reports as an unallocated hole, to force block allocation without
+changing file contents.
+
+This is unsafe against Windows servers.  Per the Win32 documentation,
+FSCTL_QUERY_ALLOCATED_RANGES only reports ranges that *may* contain
+nonzero data and is explicitly not coherent with recently written data:
+
+  ""a call to FSCTL_QUERY_ALLOCATED_RANGES [after writing to a network
+   file] would not necessarily return a correct list of allocated
+   regions.  To ensure coherency [...] flush the data to the file""
+
+fsx (generic/363) reproduces the resulting corruption against Windows
+Server 2022: a range is written, an uncached read returns the data, yet
+the next FSCTL_QUERY_ALLOCATED_RANGES on that range reports it as a whole
+hole, so the emulation overwrites live data with zeroes.  A network trace
+confirmed the WRITE, the READ returning data and the query returning an
+empty range list within microseconds.  Samba does not exhibit this; its
+query is coherent with the written data.
+
+Write back the dirty pages, drain any outstanding I/O and issue an SMB2
+FLUSH to force the server to commit the data before querying the
+allocated ranges, so the query reflects the data actually present.
+
+With this, generic/363 passes against both Windows Server 2022 and Samba
+over 100000 fsx operations."
