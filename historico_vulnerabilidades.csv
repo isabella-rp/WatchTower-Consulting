@@ -246,3 +246,17 @@ never uses CET unless GMET is also present.  The WARN is reproducible
 even with gmet=0, with some hacking of kvm-unit-tests's cet.c testcase
 to ensure that the first access to the shadow stack triggers a page fault."
 2026-10-29T12:17:12.017;CVE-2026-119025;Windows 11;HIGH;7.5;open 7.2.0 before 11.0.0 contains an OS command injection vulnerability that allows attackers to execute PowerShell code by supplying crafted URLs on Windows and WSL. Attackers can embed $(...) subexpressions in URLs, such as OAuth authorization_endpoint values from malicious MCP servers, which execute when index.js passes them unescaped to powershell -EncodedCommand.
+2026-10-29T16:18:08.593;CVE-2026-20942;Microsoft Edge;MEDIUM;4.3;Improper restriction of rendered ui layers or frames in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform spoofing over a network.
+2026-10-29T16:19:31.123;CVE-2026-85330;Microsoft Edge;MEDIUM;4.3;Incorrect authorization in Microsoft Edge for Android allows an unauthorized attacker to bypass a security feature over a network.
+2026-10-29T16:19:45.017;CVE-2026-85890;Microsoft Edge;HIGH;8.8;Double free in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.
+2026-10-29T16:19:45.220;CVE-2026-85897;Microsoft Edge;HIGH;8.8;Heap-based buffer overflow in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.
+2026-10-29T16:19:45.410;CVE-2026-85899;Microsoft Edge;HIGH;8.1;Use after free in Microsoft Edge (Chromium-based) allows an authorized attacker to elevate privileges over a network.
+2026-10-29T16:19:52.807;CVE-2026-88077;Microsoft Edge;HIGH;8.8;Integer overflow or wraparound in Microsoft Edge (Chromium-based) allows an unauthorized attacker to elevate privileges over a network.
+2026-10-29T16:19:53.440;CVE-2026-88078;Microsoft Edge;MEDIUM;4.3;Improper verification of cryptographic signature in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform spoofing over a network.
+2026-10-29T16:19:54.280;CVE-2026-88090;Microsoft Edge;MEDIUM;5.4;Access of resource using incompatible type ('type confusion') in Microsoft Edge (Chromium-based) allows an unauthorized attacker to elevate privileges over a network.
+2026-10-29T16:20:08.143;CVE-2026-96187;Microsoft Edge;HIGH;7.4;Access of resource using incompatible type ('type confusion') in Microsoft Edge (Chromium-based) allows an unauthorized attacker to disclose information over a network.
+2026-10-29T16:20:08.347;CVE-2026-96192;Microsoft Edge;HIGH;8.8;Use after free in Microsoft Edge for iOS allows an unauthorized attacker to execute code over a network.
+2026-10-29T16:20:08.477;CVE-2026-96196;Microsoft Edge;HIGH;8.8;Incomplete list of disallowed inputs in Microsoft Edge (Chromium-based) allows an unauthorized attacker to bypass a security feature over a network.
+2026-10-29T16:20:08.607;CVE-2026-96198;Microsoft Edge;HIGH;8.8;Heap-based buffer overflow in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.
+2026-10-29T16:20:08.737;CVE-2026-96199;Microsoft Edge;HIGH;8.8;Heap-based buffer overflow in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.
+2026-10-29T16:20:09.003;CVE-2026-96203;Microsoft Edge;HIGH;8.8;Use after free in Microsoft Edge (Chromium-based) allows an unauthorized attacker to elevate privileges over a network.
