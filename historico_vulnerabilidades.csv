@@ -245,3 +245,4 @@ somehow enables reporting the SS bit; rather, it's simply that Hyper-V
 never uses CET unless GMET is also present.  The WARN is reproducible
 even with gmet=0, with some hacking of kvm-unit-tests's cet.c testcase
 to ensure that the first access to the shadow stack triggers a page fault."
+2026-10-29T12:17:12.017;CVE-2026-119025;Windows 11;HIGH;7.5;open 7.2.0 before 11.0.0 contains an OS command injection vulnerability that allows attackers to execute PowerShell code by supplying crafted URLs on Windows and WSL. Attackers can embed $(...) subexpressions in URLs, such as OAuth authorization_endpoint values from malicious MCP servers, which execute when index.js passes them unescaped to powershell -EncodedCommand.
